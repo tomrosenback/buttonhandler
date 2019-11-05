@@ -24,7 +24,7 @@ enum {
 
 class ButtonHandler {
 	public:
-		ButtonHandler(bool invertState, int holdTime = 3000);
+		ButtonHandler(bool invertState, unsigned int holdTime = 3000);
 		int handle(int currentState, unsigned long currentTime);
 
 	protected:
