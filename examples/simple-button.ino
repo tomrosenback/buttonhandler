@@ -4,6 +4,7 @@
 #define BTN_PIN 10
 
 ButtonHandler _button = ButtonHandler(true);
+int _lastEvent = BH_EVENT_NONE;
 
 void setup() {
   pinMode(BTN_PIN, INPUT_PULLUP);
@@ -12,14 +13,11 @@ void setup() {
 void loop() {
   unsigned int buttonEvent = _button.handle(digitalRead(BTN_PIN), millis());
 
-  switch (_buttonEvent) {
-    case BH_EVENT_CLICK:
-      // normal click
-      break;
-    case BH_EVENT_HOLD:
-      // long click
-      break;
-    default:
-      break;
+  if(_lastEvent == BH_EVENT_NONE && buttonEvent == BH_EVENT_HOLD) {
+    // change to holding, do stuff
+  } else if(_lastEvent == BH_EVENT_HOLD && buttonEvent == BH_EVENT_NONE) {
+    // release, stop doing stuff
+  } else if(BH_EVENT_CLICK) {
+    // normal click
   }
 }
