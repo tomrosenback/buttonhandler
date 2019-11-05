@@ -15,7 +15,6 @@ See file LICENSE.txt for further informations on licensing terms.
 #define BUTTONHANDLER_H
 
 #define BH_DEBOUNCE_TIME 100 // ms debounce period to prevent flickering when pressing or releasing the button
-#define BH_HOLD_TIME 100 // ms hold period: how long to wait for hold event
 
 enum {
 	BH_EVENT_NONE,
@@ -25,12 +24,13 @@ enum {
 
 class ButtonHandler {
 	public:
-		ButtonHandler(bool invertState);
+		ButtonHandler(bool invertState, int holdTime = 3000);
 		int handle(int currentState, unsigned long currentTime);
 
 	protected:
 		bool _dirty;					// to prevent click event to occur after HOLD event
 		bool _invertState;   // In case we are using LOW instead of HIGH as trigger
+		unsigned int _holdTime; // ms hold period: how long to wait for hold event
 
 		// state variables
 		bool _lastState;				// buffered value of the button's previous state

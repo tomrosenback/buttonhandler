@@ -12,11 +12,12 @@ See file LICENSE.txt for further informations on licensing terms.
 
 #include "ButtonHandler.h"
 
-ButtonHandler::ButtonHandler(bool invertState) {
+ButtonHandler::ButtonHandler(bool invertState, unsigned int holdTime) {
 	_dirty = false;
 	_lastState = false;
 	_lastStateTime = 0;
 	_invertState = invertState;
+	_holdTime = holdTime;
 };
 
 int ButtonHandler::handle(int currentState, unsigned long currentTime) {
@@ -31,7 +32,7 @@ int ButtonHandler::handle(int currentState, unsigned long currentTime) {
 		if(currentState && !_lastState) { // LOW => HIGH
 			// nothing to do
 		}
-		else if(currentState && _lastState && interval > BH_HOLD_TIME && !_dirty) { // HIGH => HIGH
+		else if(currentState && _lastState && interval > _holdTime && !_dirty) { // HIGH => HIGH
 			currEvent = BH_EVENT_HOLD;
 			_dirty = true;
 		} else if(!currentState && _lastState) { // HIGH => LOW
